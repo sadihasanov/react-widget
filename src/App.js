@@ -2847,9 +2847,48 @@ function App() {
       "Theology, Divinity & Religious Studies",
     ],
   };
-  const [loading, setLoading] = useState();
-  const [error, setError] = useState("");
-  const [data, setData] = useState([]);
+
+  const [status, setStatus] = useState();
+  const [dutchUni, setDutchUni] = useState();
+  const [links, setLinks] = useState();
+  const [universityList, setUniversityList] = useState(universities);
+  const [specificSubjects, setSpecificSubjects] = useState([]);
+  const [gradDate, setGradDate] = useState(null);
+  const [generalSubject, setGeneralSubject] = useState(null);
+  const [specificSubject, setSpecificSubject] = useState(null);
+  const [university, setUniversity] = useState(null);
+  const [degreeLevel, setDegreeLevel] = useState(null);
+  const [error, setError] = useState(null);
+  const [modalOpen, setOpenModal] = useState(false);
+
+  const handleChange = (event) => {
+    if (event.name === "grad_date") {
+      const graduationDate = new Date(event.value);
+      graduationDate.setFullYear(graduationDate.getFullYear() + 3);
+
+      if (graduationDate < new Date()) {
+        setError("You have to graduate in the past 3 years.");
+      } else {
+        setError(null);
+      }
+      setGradDate(event.value);
+    } else if (event.name === "degree_lvl") {
+      if (event.value === "Bachelor") {
+        setUniversityList(dutch_universities);
+        alert("Only Dutch universities qualify for Bachelor degree!");
+      } else {
+        setUniversityList(universities);
+      }
+      setDegreeLevel(event.value);
+    } else if (event.name === "university") {
+      setUniversity(event.value);
+    } else if (event.name === "general_subject") {
+      setGeneralSubject(event.value);
+      setSpecificSubjects(specific_subjects[event.value]);
+    } else if (event.name === "specific_subject") {
+      setSpecificSubject(event.value);
+    }
+  };
 
   return (
     <div className="reddit_widget__app">
@@ -2866,8 +2905,8 @@ function App() {
             id="grad_date"
             type="date"
             placeholder="Enter your graduation date"
-            value={""}
-            onChange={() => {}}
+            value={gradDate || ""}
+            onChange={(event) => handleChange(event.target)}
           />
         </div>
         <div className="reddit_widget__selector">
@@ -2876,8 +2915,8 @@ function App() {
             className="reddit_widget__input"
             name="degree_lvl"
             id="degree_lvl"
-            value={""}
-            onChange={() => {}}
+            value={degreeLevel || ""}
+            onChange={(event) => handleChange(event.target)}
           >
             <option key={`degree_disabled`} value="null" disabled>
               - Select Degree -
@@ -2895,8 +2934,8 @@ function App() {
             className="reddit_widget__input"
             name="university"
             id="university"
-            value={""}
-            onChange={() => {}}
+            value={universities || ""}
+            onChange={(event) => handleChange(event.target)}
           >
             <option key={`university_disabled`} value="null" disabled>
               - Select University -
@@ -2914,8 +2953,8 @@ function App() {
             className="reddit_widget__input"
             name="general_subject"
             id="general_subject"
-            value={""}
-            onChange={() => {}}
+            value={generalSubject || ""}
+            onChange={(event) => handleChange(event.target)}
           >
             <option key={`general_disabled`} value="null" disabled>
               - Select Faculty -
