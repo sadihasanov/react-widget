@@ -3073,7 +3073,7 @@ function App() {
             id="specific_subject"
             value={specificSubject || "null"}
             disabled={!generalSubject || error}
-            onChange={(event) => handleChange(event)}
+            onChange={(event) => handleChange(event.target)}
           >
             <option key={`specific_disabled`} value="null" disabled>
               - Select Program -
