@@ -3012,6 +3012,7 @@ function App() {
             name="degree_lvl"
             id="degree_lvl"
             value={degreeLevel || "null"}
+            disabled={error || !gradDate}
             onChange={(event) => handleChange(event.target)}
           >
             <option key={`degree_disabled`} value="null" disabled>
@@ -3031,6 +3032,7 @@ function App() {
             name="university"
             id="university"
             value={university || "null"}
+            disabled={!degreeLevel || error}
             onChange={(event) => handleChange(event.target)}
           >
             <option key={`university_disabled`} value="null" disabled>
@@ -3050,6 +3052,7 @@ function App() {
             name="general_subject"
             id="general_subject"
             value={generalSubject || "null"}
+            disabled={!university || error}
             onChange={(event) => handleChange(event.target)}
           >
             <option key={`general_disabled`} value="null" disabled>
@@ -3069,7 +3072,8 @@ function App() {
             name="specific_subject"
             id="specific_subject"
             value={specificSubject || "null"}
-            onChange={() => {}}
+            disabled={!generalSubject || error}
+            onChange={(event) => handleChange(event)}
           >
             <option key={`specific_disabled`} value="null" disabled>
               - Select Program -
@@ -3082,7 +3086,17 @@ function App() {
               ))}
           </select>
         </div>
-        <button className="reddit_widget__button" onClick={() => {}}>
+        <button
+          className="reddit_widget__button"
+          disabled={
+            !gradDate ||
+            !degreeLevel ||
+            !university ||
+            !generalSubject ||
+            !specificSubject
+          }
+          onClick={() => checkQualification()}
+        >
           Check
         </button>
       </div>
