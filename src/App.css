@@ -1,186 +1,72 @@
-.qualification_widget__app label {
-  color: #004ec9;
-  font-family: "Avenirltstd roman", sans-serif;
-  font-size: 15px;
-  font-style: normal;
-  line-height: 24px;
-  margin-bottom: 2px;
-  font-weight: bold;
-}
-
-.qualification_widget__header {
-  font-family: "Nitti", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 24px;
-  color: #f16900;
-  line-height: 1.4;
-  line-height: 1;
-  margin-bottom: 23px;
-  font-weight: normal;
-}
-
-.qualification_widget__selector {
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 10px;
-  color: #333333;
-}
-
-.qualification_widget__error {
-  font-family: "Avenirltstd roman", sans-serif;
-  color: red;
-  font-size: 0.875rem;
-}
-
-.qualification_widget__border {
-  border: 2px solid red;
-  border-radius: 4px;
-}
-
-.qualification_widget__input {
-  background-color: #fafafa;
-  display: block;
-  width: 100%;
-  height: 38px;
-  margin-bottom: 10px;
+.reddit_widget__app {
   font-size: 16px;
-  font-weight: 500;
-  padding: 8px 12px;
-  line-height: 1.42857143;
-  color: #333333;
-  border: 1px solid #cccccc;
-  box-shadow: 0 0 0 0 #000000 inset;
-  box-sizing: border-box;
-  writing-mode: horizontal-tb !important;
+  padding: 0;
+  font-family: IBMPlexSans, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #222;
+  box-shadow: 2px 2px 12px 0 rgba(0, 0, 0, 0.07);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-.qualification_widget__button {
-  font-weight: normal;
-  font-size: 15px;
-  cursor: pointer;
+.reddit_widget__app a {
+  color: #5399d7;
+  transition: 0.2s ease-in-out all;
+}
+
+.reddit_widget__header {
+  margin: 0;
+  display: block;
+  font-size: 19px;
+  padding: 12px 6px;
+  background: #5399d7;
   color: white;
   text-align: center;
-  margin-top: 25px;
-  height: 38px;
-  padding: 0;
-  display: inline-block;
-  user-select: none;
+}
+
+.reddit_widget__header a {
+  color: #fff;
+}
+
+.reddit_widget__inner {
+  padding: 12px;
+}
+
+.reddit_widget__inner a {
+  color: #222;
   text-decoration: none;
-  vertical-align: top;
-  margin: 0;
-  text-align: center;
-  width: 100%;
-  border: 0;
-  border-radius: 0;
-  transition: 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-  transition-property: color, background-color;
-  background-color: #1a3f97;
 }
 
-.qualification_widget__button:hover {
-  background-color: #132d6b;
-}
-
-.qualification_widget__modalBackground {
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.qualification_widget__modalContainer {
-  width: 700px;
-  height: 180px;
-  border-radius: 12px;
-  background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+.reddit_widget__post {
   display: flex;
   flex-direction: column;
-  font-family: "Nitti", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding: 6px 0;
 }
 
-.qualification_widget__modalContainer .title {
-  display: inline-block;
+
+.reddit_widget__posted_by {
+  font-size: 14px;
+  color: rgb(120, 124, 126);
+  padding: 0 0 6px 0;
+}
+
+.reddit_widget__posted_by a {
+  color: rgb(120, 124, 126);
+}
+
+a.reddit_widget__posted_by:hover {
+  text-decoration: underline;
+}
+
+a.reddit_widget__title {
+  font-weight: 500;
+}
+
+a.reddit_widget__title:hover {
+  color: #000;
+}
+
+.reddit_widget__powered_by {
   text-align: center;
-  font-size: 10px;
-  margin-top: 10px;
-}
-
-.qualification_widget__modalContainer .body {
-  text-align: center;
-}
-
-.qualification_widget__titleCloseBtn button {
-  background-color: transparent;
-  border: none;
-  font-size: 25px;
-  cursor: pointer;
-}
-
-.qualification_widget__modalContainer .footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.qualification_widget__modalContainer .footer button {
-  width: 150px;
-  height: 45px;
-  margin: 10px;
-  transition: 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-  transition-property: color, background-color;
-  background-color: #1a3f97;
-  border: none;
-  color: white;
-  border-radius: 8px;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-.qualification_widget__modalContainer .footer button:hover {
-  background-color: #132d6b;
-}
-
-#qualification_widget__cancelBtn {
-  background-color: crimson;
-}
-
-#qualification_widget__cancelBtn:hover {
-  background-color: #b30000;
-}
-
-.qualification_widget__modalContainer .failedFooter {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.qualification_widget__modalContainer .failedFooter button {
-  width: 150px;
-  height: 45px;
-  margin: 10px;
-  transition: 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-  transition-property: color, background-color;
-  background-color: #1a3f97;
-  border: none;
-  color: white;
-  border-radius: 8px;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-@media only screen and (max-width: 800px) {
-  .qualification_widget__modalContainer {
-    height: 300px;
-    width: 350px;
-  }
-  .qualification_widget__modalContainerFailed {
-    height: 220px !important;
-  }
-  .qualification_widget__modalContainer .footer {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
+  font-size: 14px;
 }
