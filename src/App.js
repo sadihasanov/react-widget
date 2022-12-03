@@ -2882,7 +2882,7 @@ function App() {
             <option key={`degree_disabled`} value="null" disabled>
               - Select Degree -
             </option>
-            {["Test 1", "Test 2"].map((degree, idx) => (
+            {degrees.map((degree, idx) => (
               <option key={`degree_${idx}`} value={degree}>
                 {degree}
               </option>
