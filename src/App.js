@@ -2934,7 +2934,7 @@ function App() {
             className="reddit_widget__input"
             name="university"
             id="university"
-            value={universities || ""}
+            value={university || ""}
             onChange={(event) => handleChange(event.target)}
           >
             <option key={`university_disabled`} value="null" disabled>
@@ -2978,11 +2978,12 @@ function App() {
             <option key={`specific_disabled`} value="null" disabled>
               - Select Program -
             </option>
-            {["Test 1", "Test 2"].map((specificSubject, idx) => (
-              <option key={`specific_${idx}`} value={specificSubject}>
-                {specificSubject}
-              </option>
-            ))}
+            {specificSubjects &&
+              specificSubjects.map((specificSubject, idx) => (
+                <option key={`specific_${idx}`} value={specificSubject}>
+                  {specificSubject}
+                </option>
+              ))}
           </select>
         </div>
         <button className="reddit_widget__button" onClick={() => {}}>
