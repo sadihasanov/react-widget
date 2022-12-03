@@ -2939,7 +2939,7 @@ function App() {
             <option key={`specific_disabled`} value="null" disabled>
               - Select Program -
             </option>
-            {specific_subjects.map((specificSubject, idx) => (
+            {["Test 1", "Test 2"].map((specificSubject, idx) => (
               <option key={`specific_${idx}`} value={specificSubject}>
                 {specificSubject}
               </option>
