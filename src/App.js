@@ -2920,7 +2920,7 @@ function App() {
             <option key={`general_disabled`} value="null" disabled>
               - Select Faculty -
             </option>
-            {["Test 1", "Test 2"].map((subject, idx) => (
+            {general_subjects.map((subject, idx) => (
               <option key={`general_${idx}`} value={subject}>
                 {subject}
               </option>
@@ -2939,7 +2939,7 @@ function App() {
             <option key={`specific_disabled`} value="null" disabled>
               - Select Program -
             </option>
-            {["Test 1", "Test 2"].map((specificSubject, idx) => (
+            {specific_subjects.map((specificSubject, idx) => (
               <option key={`specific_${idx}`} value={specificSubject}>
                 {specificSubject}
               </option>
