@@ -38,8 +38,7 @@ function nonStickiedOnly(post) {
   return !post.data.stickied;
 }
 
-function App({ domElement }) {
-  const subreddit = domElement.getAttribute("data-subreddit");
+function App() {
   const [loading, setLoading] = useState();
   const [error, setError] = useState("");
   const [data, setData] = useState([]);
@@ -47,7 +46,7 @@ function App({ domElement }) {
   useEffect(() => {
     // Fetch data from reddit
     setLoading(true);
-    fetch(`https://www.reddit.com/r/${subreddit}.json`)
+    fetch(`https://www.reddit.com/r/javascript.json`)
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
@@ -64,7 +63,7 @@ function App({ domElement }) {
     <div className="reddit_widget__app">
       <h1 className="reddit_widget__header">
         Latest posts in{" "}
-        <a href={`https://reddit.com/r/${subreddit}`} rel="noopener noreferrer">
+        <a href={`https://reddit.com/r/javascript`} rel="noopener noreferrer">
           /r/{subreddit}
         </a>
       </h1>
