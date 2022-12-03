@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 
-function App({ domElement }) {
-  const subreddit = domElement.getAttribute("data-subreddit");
+function App() {
   const [loading, setLoading] = useState();
   const [error, setError] = useState("");
   const [data, setData] = useState([]);
