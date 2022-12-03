@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 
 // Find all widget divs
-const WidgetDivs = document.querySelectorAll(".qualification-widget");
+const WidgetDivs = document.querySelectorAll(".reddit_widget");
 
 // Inject our React App into each
 WidgetDivs.forEach((Div) => {

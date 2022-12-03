@@ -7,7 +7,7 @@ function App() {
   const [data, setData] = useState([]);
 
   return (
-    <div className="qualification-widget__app">
+    <div className="reddit_widget__app">
       <h1>Testing Number 2</h1>
     </div>
   );
