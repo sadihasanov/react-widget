@@ -2861,6 +2861,101 @@ function App() {
   const [error, setError] = useState(null);
   const [modalOpen, setOpenModal] = useState(false);
 
+  const checkQualification = async () => {
+    if (dutch_universities.includes(university)) {
+      setStatus(true);
+      setDutchUni(true);
+      setOpenModal(true);
+    } else {
+      return axios({
+        method: "post",
+        url: "https://squid-app-co5bx.ondigitalocean.app/technocore/api/ranking",
+        data: {
+          grad_date: gradDate,
+          general_subject: generalSubject.toLowerCase(),
+          specific_subject: specificSubject.toLowerCase(),
+          university: university.toLowerCase(),
+        },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          if (res.data["status"]) {
+            setLinks({
+              qs: res.data.qs,
+              th: res.data.th,
+              sh: res.data.sh,
+            });
+            setStatus(true);
+            setOpenModal(true);
+          } else {
+            setStatus(false);
+            setOpenModal(true);
+          }
+        })
+        .catch(() => {});
+    }
+  };
+
+  function Modal() {
+    return (
+      <div className="reddit_widget__modalBackground">
+        <div
+          className={`reddit_widget__modalContainer ${
+            status ? null : "reddit_widget__modalContainerFailed"
+          }`}
+        >
+          <div className="title">
+            <h1>
+              {status
+                ? "Your university qualifies for the Dutch Orientation year permit"
+                : "Your university did not qualify for Dutch Orientation year permit"}
+            </h1>
+          </div>
+          <div className="body">
+            <p>
+              {status && !dutchUni
+                ? "Below you can find the rankings where your university is located in the top 200"
+                : dutchUni
+                ? "All Dutch universities qualify for this VISA"
+                : "To be certain, you could manually check the rankings"}
+            </p>
+          </div>
+          <div className={status ? "footer" : "failedFooter"}>
+            {status && !dutchUni && (
+              <a href={links?.qs} target="_blank" rel="noreferrer">
+                <button>Top Rankings</button>
+              </a>
+            )}
+            {status && !dutchUni && (
+              <a href={links?.th} target="_blank" rel="noreferrer">
+                <button>Times Higher</button>
+              </a>
+            )}
+            {status && !dutchUni && (
+              <a href={links?.sh} target="_blank" rel="noreferrer">
+                <button>Shanghai</button>
+              </a>
+            )}
+            <a>
+              <button
+                onClick={() => {
+                  setStatus(null);
+                  setDutchUni(null);
+                  setOpenModal(false);
+                }}
+                id="reddit_widget__cancelBtn"
+              >
+                Close
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const handleChange = (event) => {
     if (event.name === "grad_date") {
       const graduationDate = new Date(event.value);
@@ -2892,6 +2987,7 @@ function App() {
 
   return (
     <div className="reddit_widget__app">
+      {modalOpen && Modal(setOpenModal)}
       <h1 className="reddit_widget__header">
         Do I qualify for the orientation year permit?
       </h1>
@@ -2915,7 +3011,7 @@ function App() {
             className="reddit_widget__input"
             name="degree_lvl"
             id="degree_lvl"
-            value={degreeLevel || ""}
+            value={degreeLevel || "null"}
             onChange={(event) => handleChange(event.target)}
           >
             <option key={`degree_disabled`} value="null" disabled>
@@ -2934,7 +3030,7 @@ function App() {
             className="reddit_widget__input"
             name="university"
             id="university"
-            value={university || ""}
+            value={university || "null"}
             onChange={(event) => handleChange(event.target)}
           >
             <option key={`university_disabled`} value="null" disabled>
@@ -2953,7 +3049,7 @@ function App() {
             className="reddit_widget__input"
             name="general_subject"
             id="general_subject"
-            value={generalSubject || ""}
+            value={generalSubject || "null"}
             onChange={(event) => handleChange(event.target)}
           >
             <option key={`general_disabled`} value="null" disabled>
@@ -2972,7 +3068,7 @@ function App() {
             className="reddit_widget__input"
             name="specific_subject"
             id="specific_subject"
-            value={""}
+            value={specificSubject || "null"}
             onChange={() => {}}
           >
             <option key={`specific_disabled`} value="null" disabled>
