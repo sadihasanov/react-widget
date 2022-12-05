@@ -89,9 +89,10 @@
 }
 
 .reddit_widget__modalContainer {
-  width: 700px;
-  height: 180px;
+  width: auto;
+  height: auto;
   border-radius: 12px;
+  text-align: center;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   display: flex;
@@ -100,13 +101,10 @@
 }
 
 .reddit_widget__modalContainer .title {
-  text-align: center;
   font-size: 20px;
-  margin-top: 10px;
 }
 
 .reddit_widget__modalContainer .body {
-  text-align: center;
   font-size: 17px;
 }
 
