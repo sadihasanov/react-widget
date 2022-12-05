@@ -2908,11 +2908,11 @@ function App() {
           }`}
         >
           <div className="title">
-            <h1>
+            <p>
               {status
                 ? "Your university qualifies for the Dutch Orientation year permit"
                 : "Your university did not qualify for Dutch Orientation year permit"}
-            </h1>
+            </p>
           </div>
           <div className="body">
             <p>
