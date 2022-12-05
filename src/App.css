@@ -102,6 +102,7 @@
 
 .reddit_widget__modalContainer .title {
   font-size: 20px;
+  margin-top: 10px;
 }
 
 .reddit_widget__modalContainer .body {
@@ -119,6 +120,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .reddit_widget__modalContainer .footer button {
@@ -168,13 +170,6 @@
 }
 
 @media only screen and (max-width: 800px) {
-  .reddit_widget__modalContainer {
-    height: 300px;
-    width: 350px;
-  }
-  .reddit_widget__modalContainerFailed {
-    height: 220px !important;
-  }
   .reddit_widget__modalContainer .footer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
