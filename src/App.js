@@ -2901,7 +2901,12 @@ function App() {
 
   function Modal() {
     return (
-      <div className="reddit_widget__modalBackground">
+      <div
+        className="reddit_widget__modalBackground"
+        style={{
+          top: `${document.getElementById("reddit_widget").offsetTop + 219}px`,
+        }}
+      >
         <div
           className={`reddit_widget__modalContainer ${
             status ? null : "reddit_widget__modalContainerFailed"
@@ -2987,7 +2992,7 @@ function App() {
   };
 
   return (
-    <div className="reddit_widget__app">
+    <div id="reddit_widget" className="reddit_widget__app">
       {modalOpen && Modal(setOpenModal)}
       <h1 className="reddit_widget__header">
         Do I qualify for the orientation year permit?
