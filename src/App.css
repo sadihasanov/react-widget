@@ -81,6 +81,7 @@
 }
 
 .reddit_widget__modalBackground {
+  z-index: 99;
   position: absolute;
   float: left;
   left: 50%;

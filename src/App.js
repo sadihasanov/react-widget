@@ -3008,6 +3008,7 @@ function App() {
             type="date"
             placeholder="Enter your graduation date"
             value={gradDate || ""}
+            disabled={modalOpen}
             onChange={(event) => handleChange(event.target)}
           />
         </div>
@@ -3018,7 +3019,7 @@ function App() {
             name="degree_lvl"
             id="degree_lvl"
             value={degreeLevel || "null"}
-            disabled={error || !gradDate}
+            disabled={error || !gradDate || modalOpen}
             onChange={(event) => handleChange(event.target)}
           >
             <option key={`degree_disabled`} value="null" disabled>
@@ -3038,7 +3039,7 @@ function App() {
             name="university"
             id="university"
             value={university || "null"}
-            disabled={!degreeLevel || error}
+            disabled={!degreeLevel || error || modalOpen}
             onChange={(event) => handleChange(event.target)}
           >
             <option key={`university_disabled`} value="null" disabled>
@@ -3058,7 +3059,7 @@ function App() {
             name="general_subject"
             id="general_subject"
             value={generalSubject || "null"}
-            disabled={!university || error}
+            disabled={!university || error || modalOpen}
             onChange={(event) => handleChange(event.target)}
           >
             <option key={`general_disabled`} value="null" disabled>
@@ -3078,7 +3079,7 @@ function App() {
             name="specific_subject"
             id="specific_subject"
             value={specificSubject || "null"}
-            disabled={!generalSubject || error}
+            disabled={!generalSubject || error || modalOpen}
             onChange={(event) => handleChange(event.target)}
           >
             <option key={`specific_disabled`} value="null" disabled>
@@ -3099,7 +3100,8 @@ function App() {
             !degreeLevel ||
             !university ||
             !generalSubject ||
-            !specificSubject
+            !specificSubject ||
+            modalOpen
           }
           onClick={() => checkQualification()}
         >
