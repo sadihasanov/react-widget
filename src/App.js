@@ -2929,10 +2929,6 @@ function App() {
     const regByInclusion = new RegExp(escapeRegExp(inputValue), "i");
     const regByStart = new RegExp(`^${escapeRegExp(inputValue)}`, "i");
 
-    console.log(
-      universityList.filter((x) => x.value == "Stanford University").length
-    );
-
     for (const option of universityList) {
       if (regByInclusion.test(option.label)) {
         if (regByStart.test(option.label)) {
