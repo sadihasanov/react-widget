@@ -170,6 +170,16 @@
 }
 
 @media only screen and (max-width: 800px) {
+  .reddit_widget__modalContainer {
+    width: 100%;
+  }
+  .reddit_widget__modalContainer .title {
+    font-size: 17px;
+  }
+
+  .reddit_widget__modalContainer .body {
+    font-size: 14px;
+  }
   .reddit_widget__modalContainer .footer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
