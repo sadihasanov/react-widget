@@ -2928,7 +2928,7 @@ function App() {
                 : "To be certain, you could manually check the rankings"}
             </p>
           </div>
-          <div className={status ? "footer" : "failedFooter"}>
+          <div className={status && !dutchUni ? "footer" : "failedFooter"}>
             {status && !dutchUni && (
               <a href={links?.qs} target="_blank" rel="noreferrer">
                 <button>Top Rankings</button>

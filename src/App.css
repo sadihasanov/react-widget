@@ -171,7 +171,7 @@
 
 @media only screen and (max-width: 800px) {
   .reddit_widget__modalContainer {
-    width: 100%;
+    width: 90vw;
   }
   .reddit_widget__modalContainer .title {
     font-size: 17px;
