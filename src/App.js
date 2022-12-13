@@ -2881,7 +2881,7 @@ function App() {
   }
 
   const checkQualification = async () => {
-    if (dutch_universities.includes(university)) {
+    if (dutch_universities.includes(university?.value)) {
       setStatus(true);
       setDutchUni(true);
       setOpenModal(true);
@@ -2893,7 +2893,7 @@ function App() {
           grad_date: gradDate,
           general_subject: generalSubject.toLowerCase(),
           specific_subject: specificSubject.toLowerCase(),
-          university: university.value.toLowerCase(),
+          university: university?.value.toLowerCase(),
         },
         headers: {
           "Content-Type": "application/json",
