@@ -48,9 +48,16 @@
   line-height: 1.42857143;
   color: #333333;
   border: 1px solid #cccccc;
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
   box-shadow: 0 0 0 0 #000000 inset;
   box-sizing: border-box;
   writing-mode: horizontal-tb !important;
+}
+
+.reddit_widget__input:disabled {
+  background-color: hsl(0, 0%, 95%);
 }
 
 .reddit_widget__button {

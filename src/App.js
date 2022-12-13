@@ -1,5 +1,8 @@
 import axios from "axios";
-import React, { useState } from "react";
+import escapeRegExp from "lodash/escapeRegExp";
+import React, { useState, useMemo } from "react";
+import Select, { createFilter } from "react-select";
+import WindowedSelect from "react-windowed-select";
 import "./App.css";
 
 function App() {
@@ -2849,10 +2852,19 @@ function App() {
     ],
   };
 
+  const styles = {
+    control: (base) => ({
+      ...base,
+      fontSize: "16px",
+      fontFamily: "Avenirltstd roman, sans-serif",
+      background: "#fafafa",
+    }),
+  };
+
   const [status, setStatus] = useState();
   const [dutchUni, setDutchUni] = useState();
   const [links, setLinks] = useState();
-  const [universityList, setUniversityList] = useState(universities);
+  const [universityList, setUniversityList] = useState([]);
   const [specificSubjects, setSpecificSubjects] = useState([]);
   const [gradDate, setGradDate] = useState(null);
   const [generalSubject, setGeneralSubject] = useState(null);
@@ -2861,6 +2873,12 @@ function App() {
   const [degreeLevel, setDegreeLevel] = useState(null);
   const [error, setError] = useState(null);
   const [modalOpen, setOpenModal] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const MAX_DISPLAYED_OPTIONS = 500;
+
+  for (const uni of universities) {
+    universityList.push({ value: uni, label: uni });
+  }
 
   const checkQualification = async () => {
     if (dutch_universities.includes(university)) {
@@ -2875,7 +2893,7 @@ function App() {
           grad_date: gradDate,
           general_subject: generalSubject.toLowerCase(),
           specific_subject: specificSubject.toLowerCase(),
-          university: university.toLowerCase(),
+          university: university.value.toLowerCase(),
         },
         headers: {
           "Content-Type": "application/json",
@@ -2898,6 +2916,35 @@ function App() {
         .catch(() => {});
     }
   };
+
+  const filteredOptions = useMemo(() => {
+    if (!inputValue) {
+      return universityList;
+    }
+
+    const matchByStart = [];
+    const matchByInclusion = [];
+
+    const regByInclusion = new RegExp(escapeRegExp(inputValue), "i");
+    const regByStart = new RegExp(`^${escapeRegExp(inputValue)}`, "i");
+
+    for (const option of universityList) {
+      if (regByInclusion.test(option.label)) {
+        if (regByStart.test(option.label)) {
+          matchByStart.push(option);
+        } else {
+          matchByInclusion.push(option);
+        }
+      }
+    }
+
+    return [...matchByStart, ...matchByInclusion];
+  }, [inputValue]);
+
+  const slicedOptions = useMemo(
+    () => filteredOptions.slice(0, MAX_DISPLAYED_OPTIONS),
+    [filteredOptions]
+  );
 
   function Modal() {
     return (
@@ -2975,14 +3022,9 @@ function App() {
       setGradDate(event.value);
     } else if (event.name === "degree_lvl") {
       if (event.value === "Bachelor") {
-        setUniversityList(dutch_universities);
         alert("Only Dutch universities qualify for Bachelor degree!");
-      } else {
-        setUniversityList(universities);
       }
       setDegreeLevel(event.value);
-    } else if (event.name === "university") {
-      setUniversity(event.value);
     } else if (event.name === "general_subject") {
       setGeneralSubject(event.value);
       setSpecificSubjects(specific_subjects[event.value]);
@@ -2992,123 +3034,131 @@ function App() {
   };
 
   return (
-    <div id="reddit_widget" className="reddit_widget__app">
-      {modalOpen && Modal(setOpenModal)}
-      <h1 className="reddit_widget__header">
-        Do I qualify for the orientation year permit?
-      </h1>
-      <div className="reddit_widget__body">
-        <div className="reddit_widget__selector">
-          <label htmlFor="grad_date">Graduation Date</label>
-          {/* {error && <p className="reddit_widget__error">{error}</p>} */}
-          <input
-            className={"reddit_widget__input"}
-            name="grad_date"
-            id="grad_date"
-            type="date"
-            placeholder="Enter your graduation date"
-            value={gradDate || ""}
-            disabled={modalOpen}
-            onChange={(event) => handleChange(event.target)}
-          />
-        </div>
-        <div className="reddit_widget__selector">
-          <label htmlFor="degree_lvl">Degree</label>
-          <select
-            className="reddit_widget__input"
-            name="degree_lvl"
-            id="degree_lvl"
-            value={degreeLevel || "null"}
-            disabled={error || !gradDate || modalOpen}
-            onChange={(event) => handleChange(event.target)}
-          >
-            <option key={`degree_disabled`} value="null" disabled>
-              - Select Degree -
-            </option>
-            {degrees.map((degree, idx) => (
-              <option key={`degree_${idx}`} value={degree}>
-                {degree}
+    <>
+      <div id="reddit_widget" className="reddit_widget__app">
+        {modalOpen && Modal(setOpenModal)}
+        <h1 className="reddit_widget__header">
+          Do I qualify for the orientation year permit?
+        </h1>
+        <div className="reddit_widget__body">
+          <div className="reddit_widget__selector">
+            <label htmlFor="grad_date">Graduation Date</label>
+            {error && <p className="reddit_widget__error">{error}</p>}
+            <input
+              className={"reddit_widget__input"}
+              name="grad_date"
+              id="grad_date"
+              type="date"
+              placeholder="Enter your graduation date"
+              value={gradDate || ""}
+              disabled={modalOpen}
+              onChange={(event) => handleChange(event.target)}
+            />
+          </div>
+          <div className="reddit_widget__selector">
+            <label htmlFor="degree_lvl">Degree</label>
+            <select
+              className="reddit_widget__input"
+              name="degree_lvl"
+              id="degree_lvl"
+              value={degreeLevel || "null"}
+              disabled={error || !gradDate || modalOpen}
+              onChange={(event) => handleChange(event.target)}
+            >
+              <option key={`degree_disabled`} value="null" disabled>
+                - Select Degree -
               </option>
-            ))}
-          </select>
-        </div>
-        <div className="reddit_widget__selector">
-          <label htmlFor="university">University</label>
-          <select
-            className="reddit_widget__input"
-            name="university"
-            id="university"
-            value={university || "null"}
-            disabled={!degreeLevel || error || modalOpen}
-            onChange={(event) => handleChange(event.target)}
-          >
-            <option key={`university_disabled`} value="null" disabled>
-              - Select University -
-            </option>
-            {universities.map((university, idx) => (
-              <option key={`university_${idx}`} value={university}>
-                {university}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="reddit_widget__selector">
-          <label htmlFor="general_subject">Faculty</label>
-          <select
-            className="reddit_widget__input"
-            name="general_subject"
-            id="general_subject"
-            value={generalSubject || "null"}
-            disabled={!university || error || modalOpen}
-            onChange={(event) => handleChange(event.target)}
-          >
-            <option key={`general_disabled`} value="null" disabled>
-              - Select Faculty -
-            </option>
-            {general_subjects.map((subject, idx) => (
-              <option key={`general_${idx}`} value={subject}>
-                {subject}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="reddit_widget__selector">
-          <label htmlFor="specific_subject">Program</label>
-          <select
-            className="reddit_widget__input"
-            name="specific_subject"
-            id="specific_subject"
-            value={specificSubject || "null"}
-            disabled={!generalSubject || error || modalOpen}
-            onChange={(event) => handleChange(event.target)}
-          >
-            <option key={`specific_disabled`} value="null" disabled>
-              - Select Program -
-            </option>
-            {specificSubjects &&
-              specificSubjects.map((specificSubject, idx) => (
-                <option key={`specific_${idx}`} value={specificSubject}>
-                  {specificSubject}
+              {degrees.map((degree, idx) => (
+                <option key={`degree_${idx}`} value={degree}>
+                  {degree}
                 </option>
               ))}
-          </select>
+            </select>
+          </div>
+          <div className="reddit_widget__selector">
+            <label htmlFor="university">University</label>
+            <WindowedSelect
+              // className="reddit_widget__input"
+              name="university"
+              id="university"
+              value={university}
+              placeholder={"- Select University -"}
+              isDisabled={!degreeLevel || error || modalOpen}
+              onChange={(event) =>
+                setUniversity({ value: event.value, label: event.value })
+              }
+              onInputChange={(value) => setInputValue(value)}
+              options={slicedOptions}
+              styles={styles}
+              filterOption={() => true}
+            />
+            {/* <option key={`university_disabled`} value="null" disabled>
+                - Select University -
+              </option>
+              {universityList.map((university, idx) => (
+                <option key={`university_${idx}`} value={university}>
+                  {university}
+                </option>
+              ))} */}
+          </div>
+          <div className="reddit_widget__selector">
+            <label htmlFor="general_subject">Faculty</label>
+            <select
+              className="reddit_widget__input"
+              name="general_subject"
+              id="general_subject"
+              value={generalSubject || "null"}
+              disabled={!university || error || modalOpen}
+              onChange={(event) => handleChange(event.target)}
+            >
+              <option key={`general_disabled`} value="null" disabled>
+                - Select Faculty -
+              </option>
+              {general_subjects.map((subject, idx) => (
+                <option key={`general_${idx}`} value={subject}>
+                  {subject}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="reddit_widget__selector">
+            <label htmlFor="specific_subject">Program</label>
+            <select
+              className="reddit_widget__input"
+              name="specific_subject"
+              id="specific_subject"
+              value={specificSubject || "null"}
+              disabled={!generalSubject || error || modalOpen}
+              onChange={(event) => handleChange(event.target)}
+            >
+              <option key={`specific_disabled`} value="null" disabled>
+                - Select Program -
+              </option>
+              {specificSubjects &&
+                specificSubjects.map((specificSubject, idx) => (
+                  <option key={`specific_${idx}`} value={specificSubject}>
+                    {specificSubject}
+                  </option>
+                ))}
+            </select>
+          </div>
+          <button
+            className="reddit_widget__button"
+            disabled={
+              !gradDate ||
+              !degreeLevel ||
+              !university ||
+              !generalSubject ||
+              !specificSubject ||
+              modalOpen
+            }
+            onClick={() => checkQualification()}
+          >
+            Check
+          </button>
         </div>
-        <button
-          className="reddit_widget__button"
-          disabled={
-            !gradDate ||
-            !degreeLevel ||
-            !university ||
-            !generalSubject ||
-            !specificSubject ||
-            modalOpen
-          }
-          onClick={() => checkQualification()}
-        >
-          Check
-        </button>
       </div>
-    </div>
+    </>
   );
 }
 
