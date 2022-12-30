@@ -1,7 +1,7 @@
 import axios from "axios";
 import escapeRegExp from "lodash/escapeRegExp";
 import React, { useState, useMemo } from "react";
-import Select, { createFilter } from "react-select";
+import "regenerator-runtime/runtime";
 import WindowedSelect from "react-windowed-select";
 import "./App.css";
 
