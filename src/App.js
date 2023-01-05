@@ -1,7 +1,6 @@
 import axios from "axios";
 import escapeRegExp from "lodash/escapeRegExp";
 import React, { useState, useMemo } from "react";
-import "regenerator-runtime/runtime";
 import WindowedSelect from "react-windowed-select";
 import "./App.css";
 
