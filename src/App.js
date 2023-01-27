@@ -2856,7 +2856,7 @@ for (const uni of universities) {
   universityList.push({ value: uni, label: uni });
 }
 
-function App() {
+const App = () => {
   const styles = {
     control: (base) => ({
       ...base,
@@ -3160,6 +3160,6 @@ function App() {
       </div>
     </>
   );
-}
-
+};
+ReactDOM.render(<App />, document.getElementById("reddit_widget"));
 export default App;
