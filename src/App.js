@@ -3161,5 +3161,4 @@ const App = () => {
     </>
   );
 };
-ReactDOM.render(<App />, document.getElementById("reddit_widget"));
 export default App;
