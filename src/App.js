@@ -2888,7 +2888,7 @@ const App = () => {
     } else {
       return axios({
         method: "post",
-        url: "https://squid-app-co5bx.ondigitalocean.app/technocore/api/ranking",
+        url: "https://sea-lion-app-jqd2n.ondigitalocean.app/technocore/api/ranking",
         data: {
           grad_date: gradDate,
           general_subject: generalSubject.toLowerCase(),
