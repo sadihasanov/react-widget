@@ -2877,6 +2877,7 @@ const App = () => {
   const [degreeLevel, setDegreeLevel] = useState(null);
   const [error, setError] = useState(null);
   const [modalOpen, setOpenModal] = useState(false);
+  const [dutchModalOpen, setDutchModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const MAX_DISPLAYED_OPTIONS = 300;
 
@@ -2946,6 +2947,39 @@ const App = () => {
     [filteredOptions]
   );
 
+  function DutchModal() {
+    return (
+      <div
+        className="reddit_widget__modalBackground"
+        style={{
+          top: `${document.getElementById("reddit_widget").offsetTop + 219}px`,
+        }}
+      >
+        <div
+          className={`reddit_widget__modalContainer ${
+            status ? null : "reddit_widget__modalContainerFailed"
+          }`}
+        >
+          <div className="title">
+            <p>Only Dutch Universities qualify for Bachelor degree! </p>
+          </div>
+          <div className="failedFooter">
+            <a>
+              <button
+                onClick={() => {                                    
+                  setDutchModalOpen(false);
+                }}
+                id="reddit_widget__cancelBtn"
+              >
+                Close
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   function Modal() {
     return (
       <div
@@ -2963,7 +2997,7 @@ const App = () => {
             <p>
               {status
                 ? "Your university qualifies for the Dutch Orientation year permit"
-                : "Your university did not qualify for Dutch Orientation year permit"}
+                : "Your university does not qualify for Dutch Orientation year permit"}
             </p>
           </div>
           <div className="body">
@@ -3022,7 +3056,7 @@ const App = () => {
       setGradDate(event.value);
     } else if (event.name === "degree_lvl") {
       if (event.value === "Bachelor") {
-        alert("Only Dutch universities qualify for Bachelor degree!");
+        setDutchModalOpen(true)
       }
       setDegreeLevel(event.value);
     } else if (event.name === "general_subject") {
@@ -3037,9 +3071,7 @@ const App = () => {
     <>
       <div id="reddit_widget" className="reddit_widget__app">
         {modalOpen && Modal(setOpenModal)}
-        <h1 className="reddit_widget__header">
-          Do I qualify for the orientation year permit?
-        </h1>
+        {dutchModalOpen && DutchModal(setDutchModalOpen)}
         <div className="reddit_widget__body">
           <div className="reddit_widget__selector">
             <label htmlFor="grad_date">Graduation Date</label>
@@ -3051,7 +3083,7 @@ const App = () => {
               type="date"
               placeholder="Enter your graduation date"
               value={gradDate || ""}
-              disabled={modalOpen}
+              disabled={modalOpen || dutchModalOpen}
               onChange={(event) => handleChange(event.target)}
             />
           </div>
@@ -3062,7 +3094,7 @@ const App = () => {
               name="degree_lvl"
               id="degree_lvl"
               value={degreeLevel || "null"}
-              disabled={error || !gradDate || modalOpen}
+              disabled={error || !gradDate || modalOpen || dutchModalOpen}
               onChange={(event) => handleChange(event.target)}
             >
               <option key={`degree_disabled`} value="null" disabled>
@@ -3077,13 +3109,12 @@ const App = () => {
           </div>
           <div className="reddit_widget__selector">
             <label htmlFor="university">University</label>
-            <WindowedSelect
-              // className="reddit_widget__input"
+            <WindowedSelect            
               name="university"
               id="university"
               value={university}
               placeholder={"- Select University -"}
-              isDisabled={!degreeLevel || error || modalOpen}
+              isDisabled={!degreeLevel || error || modalOpen || dutchModalOpen}
               onChange={(event) =>
                 setUniversity({ value: event.value, label: event.value })
               }
@@ -3092,14 +3123,6 @@ const App = () => {
               styles={styles}
               filterOption={() => true}
             />
-            {/* <option key={`university_disabled`} value="null" disabled>
-                - Select University -
-              </option>
-              {universityList.map((university, idx) => (
-                <option key={`university_${idx}`} value={university}>
-                  {university}
-                </option>
-              ))} */}
           </div>
           <div className="reddit_widget__selector">
             <label htmlFor="general_subject">Faculty</label>
@@ -3108,7 +3131,7 @@ const App = () => {
               name="general_subject"
               id="general_subject"
               value={generalSubject || "null"}
-              disabled={!university || error || modalOpen}
+              disabled={!university || error || modalOpen || dutchModalOpen}
               onChange={(event) => handleChange(event.target)}
             >
               <option key={`general_disabled`} value="null" disabled>
@@ -3128,7 +3151,7 @@ const App = () => {
               name="specific_subject"
               id="specific_subject"
               value={specificSubject || "null"}
-              disabled={!generalSubject || error || modalOpen}
+              disabled={!generalSubject || error || modalOpen || dutchModalOpen}
               onChange={(event) => handleChange(event.target)}
             >
               <option key={`specific_disabled`} value="null" disabled>
