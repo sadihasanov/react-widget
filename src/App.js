@@ -3052,7 +3052,7 @@ const App = () => {
       graduationDate.setFullYear(graduationDate.getFullYear() + 3);
 
       if (graduationDate < new Date()) {
-        setError("You have to graduate in the past 3 years.");
+        setError("You have to be graduated in the past 3 years.");
       } else {
         setError(null);
       }
@@ -3077,7 +3077,7 @@ const App = () => {
         {dutchModalOpen && DutchModal(setDutchModalOpen)}
         <div className="reddit_widget__body">
           <div className="reddit_widget__selector">
-            <label htmlFor="grad_date">Graduation Date</label>
+            <label htmlFor="grad_date">Graduation date</label>
             {error && <p className="reddit_widget__error">{error}</p>}
             <input
               type="date"
@@ -3130,7 +3130,7 @@ const App = () => {
             />
           </div>
           <div className="reddit_widget__selector">
-            <label htmlFor="general_subject">Faculty</label>
+            <label htmlFor="general_subject">Broad subject area</label>
             <select
               className="reddit_widget__input"
               name="general_subject"
@@ -3150,7 +3150,7 @@ const App = () => {
             </select>
           </div>
           <div className="reddit_widget__selector">
-            <label htmlFor="specific_subject">Program</label>
+            <label htmlFor="specific_subject">Specific subject</label>
             <select
               className="reddit_widget__input"
               name="specific_subject"
