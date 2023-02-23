@@ -2879,6 +2879,9 @@ const App = () => {
   const [modalOpen, setOpenModal] = useState(false);
   const [dutchModalOpen, setDutchModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const maxDate = new Date();
+  let minDate = new Date();
+  minDate.setFullYear(maxDate.getFullYear() - 3);
   const MAX_DISPLAYED_OPTIONS = 300;
 
   const checkQualification = async () => {
@@ -3083,7 +3086,8 @@ const App = () => {
               id="grad_date"
               placeholder="Enter your graduation date"
               value={gradDate || ""}
-              max={new Date().toISOString().split("T")[0]}
+              max={maxDate.toISOString().split("T")[0]}
+              min={minDate.toISOString().split("T")[0]}
               disabled={modalOpen || dutchModalOpen}
               onChange={(event) => handleChange(event.target)}
             />
