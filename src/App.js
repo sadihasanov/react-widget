@@ -2966,7 +2966,7 @@ const App = () => {
           <div className="failedFooter">
             <a>
               <button
-                onClick={() => {                                    
+                onClick={() => {
                   setDutchModalOpen(false);
                 }}
                 id="reddit_widget__cancelBtn"
@@ -3056,7 +3056,7 @@ const App = () => {
       setGradDate(event.value);
     } else if (event.name === "degree_lvl") {
       if (event.value === "Bachelor") {
-        setDutchModalOpen(true)
+        setDutchModalOpen(true);
       }
       setDegreeLevel(event.value);
     } else if (event.name === "general_subject") {
@@ -3077,12 +3077,13 @@ const App = () => {
             <label htmlFor="grad_date">Graduation Date</label>
             {error && <p className="reddit_widget__error">{error}</p>}
             <input
+              type="date"
               className={"reddit_widget__input"}
               name="grad_date"
               id="grad_date"
-              type="date"
               placeholder="Enter your graduation date"
               value={gradDate || ""}
+              max={new Date().toISOString().split("T")[0]}
               disabled={modalOpen || dutchModalOpen}
               onChange={(event) => handleChange(event.target)}
             />
@@ -3109,7 +3110,7 @@ const App = () => {
           </div>
           <div className="reddit_widget__selector">
             <label htmlFor="university">University</label>
-            <WindowedSelect            
+            <WindowedSelect
               name="university"
               id="university"
               value={university}
