@@ -3184,6 +3184,13 @@ const App = () => {
           >
             Check
           </button>
+          <div>
+            <p className="reddit_widget__disclaimer">
+              *This tool gives an indication whether your degree meets the
+              condition to apply for the search year visa, but it does not
+              provide 100% certainty. No rights can be derived from this tool
+            </p>
+          </div>
         </div>
       </div>
     </>

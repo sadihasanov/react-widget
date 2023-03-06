@@ -8,6 +8,11 @@
   font-weight: bold;
 }
 
+.reddit_widget__disclaimer {
+  font-family: "Avenirltstd roman", sans-serif !important;
+  color: #808080;
+}
+
 .reddit_widget__header {
   font-family: "Nitti", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   font-size: 24px;
