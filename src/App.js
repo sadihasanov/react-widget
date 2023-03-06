@@ -3140,7 +3140,7 @@ const App = () => {
               onChange={(event) => handleChange(event.target)}
             >
               <option key={`general_disabled`} value="null" disabled>
-                - Select Faculty -
+                - Select Broad Subject Area -
               </option>
               {general_subjects.map((subject, idx) => (
                 <option key={`general_${idx}`} value={subject}>
@@ -3160,7 +3160,7 @@ const App = () => {
               onChange={(event) => handleChange(event.target)}
             >
               <option key={`specific_disabled`} value="null" disabled>
-                - Select Program -
+                - Select Speific Subject -
               </option>
               {specificSubjects &&
                 specificSubjects.map((specificSubject, idx) => (

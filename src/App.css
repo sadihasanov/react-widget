@@ -9,6 +9,7 @@
 }
 
 .reddit_widget__disclaimer {
+  padding-top: 5px;
   font-family: "Avenirltstd roman", sans-serif !important;
   color: #808080;
 }
